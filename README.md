@@ -1,5 +1,9 @@
 # File Organizer
 
+[![.NET Build](https://github.com/PajoCz/FileOrganizer/actions/workflows/dotnet.yml/badge.svg)](https://github.com/PajoCz/FileOrganizer/actions/workflows/dotnet.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![.NET Version](https://img.shields.io/badge/.NET-8.0-purple)](https://dotnet.microsoft.com/download/dotnet/8.0)
+
 A .NET 8 console application for analyzing and organizing files (photos and videos) by date with intelligent duplicate detection using SHA256 hashing.
 
 ## Features
