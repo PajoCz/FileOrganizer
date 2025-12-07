@@ -1,4 +1,4 @@
-# Contributing to File Organizer
+﻿# Contributing to File Organizer
 
 Thank you for your interest in contributing to File Organizer! This document provides guidelines for contributing to the project.
 
@@ -88,7 +88,7 @@ Update README with new configuration options
 
 ## Development Setup
 
-1. Install .NET 8 SDK
+1. Install \.NET 10 SDK
 2. Clone the repository
 3. Open in your favorite IDE (Visual Studio, VS Code, Rider)
 4. Create `appsettings.json` from example
@@ -97,3 +97,4 @@ Update README with new configuration options
 ## Questions?
 
 Feel free to create an issue for any questions about contributing!
+

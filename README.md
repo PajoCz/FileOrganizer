@@ -1,4 +1,4 @@
-# File Organizer
+﻿# File Organizer
 
 [![.NET Build](https://github.com/PajoCz/FileOrganizer/actions/workflows/dotnet.yml/badge.svg)](https://github.com/PajoCz/FileOrganizer/actions/workflows/dotnet.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -8,12 +8,12 @@ A .NET 10 console application for analyzing and organizing files (photos and vid
 
 ## Features
 
-- ?? **File Analysis** - Analyze files by extension and generate detailed reports
-- ?? **Smart File Organization** - Copy files to date-based folder structure
-- ?? **Duplicate Detection** - SHA256 hash-based duplicate detection
-- ?? **Collision Handling** - Automatic numbering for files with same name but different content
-- ?? **Detailed Logging** - Complete operation log with timestamps and file sizes
-- ? **Performance Optimized** - Hash calculation only when necessary
+-  **File Analysis** - Analyze files by extension and generate detailed reports
+-  **Smart File Organization** - Copy files to date-based folder structure
+-  **Duplicate Detection** - SHA256 hash-based duplicate detection
+-  **Collision Handling** - Automatic numbering for files with same name but different content
+-  **Detailed Logging** - Complete operation log with timestamps and file sizes
+- → **Performance Optimized** - Hash calculation only when necessary
 
 ## Requirements
 
@@ -80,9 +80,9 @@ Use these macros in `OutputFileName` and `CopyLogFileName` to include current da
 | `{DateTime:ddMMyyyy}` | European date | `15032024` |
 
 **You can use ANY .NET DateTime format!** Examples:
-- `{DateTime:yyyy-MM-dd_HH-mm-ss}` ? `2024-03-15_14-30-22`
-- `{DateTime:yyyyMMdd}` ? `20240315`
-- `{DateTime:HH-mm}` ? `14-30`
+- `{DateTime:yyyy-MM-dd_HH-mm-ss}` → `2024-03-15_14-30-22`
+- `{DateTime:yyyyMMdd}` → `20240315`
+- `{DateTime:HH-mm}` → `14-30`
 
 
 **Example Configuration:**
@@ -280,10 +280,10 @@ Replace `win-x64` with your target runtime:
 
 ```
 FileOrganizer/
-??? FileOrganizer.csproj    # Project file
-??? Program.cs              # Main application logic
-??? appsettings.json        # Configuration file
-??? README.md               # This file
+→ FileOrganizer.csproj    # Project file
+→ Program.cs              # Main application logic
+→ appsettings.json        # Configuration file
+→ README.md               # This file
 ```
 
 ## Dependencies
@@ -301,8 +301,11 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Author
 
-Created by [Your Name]
+Created by PajoCz
 
 ## Support
 
 If you encounter any issues or have questions, please open an issue on GitHub.
+
+
+
