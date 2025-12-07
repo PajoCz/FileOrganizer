@@ -14,16 +14,16 @@
 **Result:**
 ```
 c:\Users\John\Photos\
-??? 2024\
-?   ??? 01\
-?   ?   ??? 15\
-?   ?   ?   ??? IMG_001.jpg
-?   ?   ?   ??? IMG_002.jpg
-?   ?   ??? 20\
-?   ?       ??? photo.png
-?   ??? 03\
-?       ??? 10\
-?           ??? family.jpg
+- 2024\
+  - 01\
+    - 15\
+      - IMG_001.jpg
+      - IMG_002.jpg
+    - 20\
+      - photo.png
+  - 03\
+    - 10\
+      - family.jpg
 ```
 
 ## Example 2: Archive Videos by Year and Month
@@ -40,15 +40,15 @@ c:\Users\John\Photos\
 **Result:**
 ```
 e:\Archive\Videos\
-??? 2023\
-?   ??? 12-December\
-?   ?   ??? birthday.mp4
-?   ?   ??? christmas.mov
-??? 2024\
-    ??? 01-January\
-    ?   ??? newyear.mp4
-    ??? 03-March\
-        ??? vacation.avi
+- 2023\
+  - 12-December\
+    - birthday.mp4
+    - christmas.mov
+- 2024\
+  - 01-January\
+    - newyear.mp4
+  - 03-March\
+    - vacation.avi
 ```
 
 ## Example 3: Keep Original Structure with Timestamp
@@ -65,9 +65,9 @@ e:\Archive\Videos\
 **Result:**
 ```
 c:\Organized\
-??? 2024-03-15_140522_IMG_001.jpg
-??? 2024-03-15_140523_IMG_002.raw
-??? 2024-03-15_143012_photo.cr2
+- 2024-03-15_140522_IMG_001.jpg
+- 2024-03-15_140523_IMG_002.raw
+- 2024-03-15_143012_photo.cr2
 ```
 
 ## Example 4: Organize by Event Date
@@ -84,13 +84,13 @@ c:\Organized\
 **Result:**
 ```
 c:\EventArchive\
-??? 2024\
-    ??? Event_20240315\
-    ?   ??? 140522_photo1.jpg
-    ?   ??? 140530_photo2.jpg
-    ?   ??? 150100_video.mp4
-    ??? Event_20240320\
-        ??? 100000_meeting.mp4
+- 2024\
+  - Event_20240315\
+    - 140522_photo1.jpg
+    - 140530_photo2.jpg
+    - 150100_video.mp4
+  - Event_20240320\
+    - 100000_meeting.mp4
 ```
 
 ## Example 5: Simple Year-Based Archive
@@ -107,14 +107,14 @@ c:\EventArchive\
 **Result:**
 ```
 c:\PhotoArchive\
-??? 2022\
-?   ??? vacation_001.jpg
-?   ??? vacation_002.jpg
-??? 2023\
-?   ??? birthday.jpg
-?   ??? wedding.jpg
-??? 2024\
-    ??? newphoto.jpg
+- 2022\
+  - vacation_001.jpg
+  - vacation_002.jpg
+- 2023\
+  - birthday.jpg
+  - wedding.jpg
+- 2024\
+  - newphoto.jpg
 ```
 
 ## Handling Duplicates
@@ -170,4 +170,3 @@ dotnet publish -c Release -r win-x64 --self-contained
 
 # Run the published executable
 .\bin\Release\net8.0\win-x64\publish\FileOrganizer.exe --copy
-```

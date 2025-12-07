@@ -2,9 +2,9 @@
 
 [![.NET Build](https://github.com/PajoCz/FileOrganizer/actions/workflows/dotnet.yml/badge.svg)](https://github.com/PajoCz/FileOrganizer/actions/workflows/dotnet.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![.NET Version](https://img.shields.io/badge/.NET-8.0-purple)](https://dotnet.microsoft.com/download/dotnet/8.0)
+[![.NET Version](https://img.shields.io/badge/.NET-10.0-purple)](https://dotnet.microsoft.com/download/dotnet/10.0)
 
-A .NET 8 console application for analyzing and organizing files (photos and videos) by date with intelligent duplicate detection using SHA256 hashing.
+A .NET 10 console application for analyzing and organizing files (photos and videos) by date with intelligent duplicate detection using SHA256 hashing.
 
 ## Features
 
@@ -17,7 +17,7 @@ A .NET 8 console application for analyzing and organizing files (photos and vide
 
 ## Requirements
 
-- .NET 8.0 SDK or later
+- .NET 10.0 SDK or later
 - Windows, Linux, or macOS
 
 ## Installation
@@ -52,10 +52,10 @@ Edit `appsettings.json` to configure the application:
 | Key | Description | Example |
 |-----|-------------|---------|
 | `SourceFolder` | Source directory containing files to process | `c:\\Photos` |
-| `OutputFileName` | Output file name for analysis report (supports DateTime macros) | `file-analysis_{DateTime:yyyyMMdd_HHmmss}.txt` |
+| `OutputFileName` | Output file name for analysis report (supports DateTime macros) | `file-analysis_{DateTime:yyyyMMdd_HHmms}.txt` |
 | `FileExtensions` | Semicolon-separated list of file extensions to process | `.jpg;.png;.mp4` |
 | `TargetFolderPattern` | Target path pattern with macros (see below) | `c:\\Organized\\{FileDate:yyyy}\\{FileDate:MM}\\...` |
-| `CopyLogFileName` | Log file name for copy operations (supports DateTime macros) | `copy-log_{DateTime:yyyyMMdd_HHmmss}.txt` |
+| `CopyLogFileName` | Log file name for copy operations (supports DateTime macros) | `copy-log_{DateTime:yyyyMMdd_HHmms}.txt` |
 
 ### DateTime Macros (for Output and Log File Names)
 
@@ -88,8 +88,8 @@ Use these macros in `OutputFileName` and `CopyLogFileName` to include current da
 **Example Configuration:**
 ```json
 {
-  "OutputFileName": "file-analysis_{DateTime:yyyyMMdd_HHmmss}.txt",
-  "CopyLogFileName": "copy-log_{DateTime:yyyyMMdd_HHmmss}.txt"
+  "OutputFileName": "file-analysis_{DateTime:yyyyMMdd_HHmms}.txt",
+  "CopyLogFileName": "copy-log_{DateTime:yyyyMMdd_HHmms}.txt"
 }
 ```
 
@@ -113,7 +113,7 @@ Use these macros in `TargetFolderPattern` based on file's LastWriteTime:
 
 **Example Pattern:**
 ```
-c:\Organized\{FileDate:yyyy}\{FileDate:MM}\{FileDate:yyyyMMdd_HHmmss}_{FileName}.{FileExtension}
+c:\Organized\{FileDate:yyyy}\{FileDate:MM}\{FileDate:yyyyMMdd_HHmms}_{FileName}.{FileExtension}
 ```
 
 **Results in:**
