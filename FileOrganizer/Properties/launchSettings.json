@@ -1,0 +1,32 @@
+{
+  "profiles": {
+    "FileOrganizer": {
+      "commandName": "Project",
+      "commandLineArgs": ""
+    },
+    "Analyze": {
+      "commandName": "Project",
+      "commandLineArgs": "--analyze"
+    },
+    "Copy": {
+      "commandName": "Project",
+      "commandLineArgs": "--copy"
+    },
+    "Copy (Dry Run)": {
+      "commandName": "Project",
+      "commandLineArgs": "--copy --dry-run"
+    },
+    "Find Duplicates": {
+      "commandName": "Project",
+      "commandLineArgs": "--find-duplicates"
+    },
+    "Clean Duplicates (Auto)": {
+      "commandName": "Project",
+      "commandLineArgs": "--clean-duplicates"
+    },
+    "Clean Duplicates (Dry Run)": {
+      "commandName": "Project",
+      "commandLineArgs": "--clean-duplicates --dry-run"
+    }
+  }
+}

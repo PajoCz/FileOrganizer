@@ -41,6 +41,9 @@ bld/
 *.txt
 !README.md
 
+# Duplicate detection logs
+duplicates-log*.txt
+
 # NuGet Packages
 *.nupkg
 *.snupkg

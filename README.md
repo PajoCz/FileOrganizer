@@ -8,12 +8,16 @@ A .NET 10 console application for analyzing and organizing files (photos and vid
 
 ## Features
 
--  **File Analysis** - Analyze files by extension and generate detailed reports
--  **Smart File Organization** - Copy files to date-based folder structure
--  **Duplicate Detection** - SHA256 hash-based duplicate detection
--  **Collision Handling** - Automatic numbering for files with same name but different content
--  **Detailed Logging** - Complete operation log with timestamps and file sizes
-- → **Performance Optimized** - Hash calculation only when necessary
+- ✅ **File Analysis** - Analyze files by extension and generate detailed reports
+- ✅ **Smart File Organization** - Copy files to date-based folder structure  
+- ✅ **Duplicate Detection** - SHA256 hash-based duplicate detection during copy
+- ✅ **Collision Handling** - Automatic numbering for files with same name but different content
+- ✅ **Duplicate Finder** - Find duplicate files in target folder (same content, different timestamps)
+- ✅ **Smart Cleanup** - Remove duplicates keeping only correctly timestamped files
+- ✅ **Dry-Run Mode** - Preview operations before executing them
+- ✅ **Detailed Logging** - Complete operation log with timestamps and file sizes
+- ✅ **Performance Statistics** - Speed metrics, data sizes, and completion summaries
+- ✅ **Performance Optimized** - Hash calculation only when necessary
 
 ## Requirements
 
@@ -43,7 +47,8 @@ Edit `appsettings.json` to configure the application:
   "OutputFileName": "file-analysis_{DateTime:yyyyMMdd_HHmmss}.txt",
   "FileExtensions": ".jpg;.jpeg;.png;.bmp;.gif;.mp4;.avi;.mov;.mpeg;.mpg;.wmv;.3gp;.vob;.ts;.mkv",
   "TargetFolderPattern": "c:\\path\\to\\target\\{FileDate:yyyy}\\{FileDate:MM}\\{FileDate:yyyyMMdd_HHmmss}_{FileName}.{FileExtension}",
-  "CopyLogFileName": "copy-log_{DateTime:yyyyMMdd_HHmmss}.txt"
+  "CopyLogFileName": "copy-log_{DateTime:yyyyMMdd_HHmms}.txt",
+  "DuplicatesLogFileName": "duplicates-log_{DateTime:yyyyMMdd_HHmmss}.txt"
 }
 ```
 
@@ -56,6 +61,7 @@ Edit `appsettings.json` to configure the application:
 | `FileExtensions` | Semicolon-separated list of file extensions to process | `.jpg;.png;.mp4` |
 | `TargetFolderPattern` | Target path pattern with macros (see below) | `c:\\Organized\\{FileDate:yyyy}\\{FileDate:MM}\\...` |
 | `CopyLogFileName` | Log file name for copy operations (supports DateTime macros) | `copy-log_{DateTime:yyyyMMdd_HHmms}.txt` |
+| `DuplicatesLogFileName` | Log file name for duplicate detection (supports DateTime macros) | `duplicates-log_{DateTime:yyyyMMdd_HHmms}.txt` |
 
 ### DateTime Macros (for Output and Log File Names)
 
@@ -123,6 +129,17 @@ c:\Organized\2024\03\20240315_143022_IMG_001.jpg
 
 ## Usage
 
+### Available Commands
+
+```bash
+dotnet run --analyze              # Analyze files in source folder
+dotnet run --copy                 # Copy and organize files
+dotnet run --copy --dry-run       # Preview copy operation
+dotnet run --find-duplicates      # Find duplicate files in target folder
+dotnet run --clean-duplicates     # Remove duplicates (keeps correct timestamps)
+dotnet run --clean-duplicates --dry-run  # Preview cleanup
+```
+
 ### Step 1: Analyze Files
 
 First, analyze the source folder to see what files will be processed:
@@ -149,7 +166,17 @@ Total Files: 1500
 .mov                          100 files
 ```
 
-### Step 2: Copy Files
+### Step 2: Preview Copy Operation (Optional)
+
+Preview what will happen using dry-run mode:
+
+```bash
+dotnet run --copy --dry-run
+```
+
+This shows what would be copied without actually copying files.
+
+### Step 3: Copy Files
 
 After reviewing the analysis, copy files to the organized structure:
 
@@ -160,36 +187,77 @@ dotnet run --copy
 This will:
 1. Copy files matching configured extensions
 2. Organize them using the date-based pattern
-3. Detect and handle duplicates
-4. Generate detailed log file
+3. Detect and handle duplicates during copy
+4. Generate detailed log file with statistics
 
-## Duplicate Handling
+### Step 4: Find Duplicates in Target Folder
 
-The application intelligently handles duplicate files:
+After organizing files, you may want to find duplicates that were copied multiple times:
 
-### Scenario 1: Identical File (Same Hash)
-**Action:** Skip - file already exists
-```
-[2024-03-15 14:30:24] [2/500] SKIP (DUPLICATE - SAME HASH)
-  Source: c:\Photos\Backup\IMG_001.jpg (2.45 MB)
-  Target: c:\Organized\2024\03\20240315_143022_IMG_001.jpg
+```bash
+dotnet run --find-duplicates
 ```
 
-### Scenario 2: Different File, Same Name
-**Action:** Copy with numbered suffix (_1, _2, etc.)
+This will:
+1. Scan the target folder for files
+2. Group files by original name and size
+3. Compare file contents using SHA256 hash
+4. Identify duplicates with different timestamps in filename
+5. Generate a detailed duplicates log
+
+**Example scenario:**
+- Original file: `Photo.jpg`
+- Copied as: `20130106_135402_Photo.jpg`
+- Later copied again as: `20130106_145402_Photo.jpg`
+- If both have the same content → Duplicate detected!
+
+**Duplicate Log Example:**
 ```
-[2024-03-15 14:30:25] [3/500] COPY (DUPLICATE - DIFFERENT HASH)
-  Source: c:\Photos\Archive\IMG_001.jpg (2.50 MB)
-  Original Target: c:\Organized\2024\03\20240315_143022_IMG_001.jpg
-  Actual Target: c:\Organized\2024\03\20240315_143022_IMG_001_1.jpg
+=== Duplicate Group #1 ===
+Original Name: Photo
+File Size: 2.45 MB
+Number of copies: 2
+
+  Path: c:\Organized\2013\01\20130106_135402_Photo.jpg
+  Date in filename: 2013-01-06 13:54:02
+  Actual file date: 2013-01-06 13:54:02
+  Match: YES (KEEP)
+
+  Path: c:\Organized\2013\01\20130106_145402_Photo.jpg
+  Date in filename: 2013-01-06 14:54:02
+  Actual file date: 2013-01-06 13:54:02
+  Match: NO (DELETE?)
 ```
 
-### Scenario 3: New File
-**Action:** Copy normally
+### Step 5: Clean Duplicates
+
+Remove duplicates keeping only files with matching timestamps:
+
+```bash
+# Preview cleanup first
+dotnet run --clean-duplicates --dry-run
+
+# Actual cleanup
+dotnet run --clean-duplicates
 ```
-[2024-03-15 14:30:23] [1/500] COPY
-  Source: c:\Photos\IMG_001.jpg (2.45 MB)
-  Target: c:\Organized\2024\03\20240315_143022_IMG_001.jpg
+
+This will:
+1. Read the duplicates log from Step 4
+2. Check each duplicate file
+3. **Keep** files where filename timestamp matches file's LastWriteTime
+4. **Delete** files where timestamps don't match
+5. Always keep at least one file per group (safety measure)
+
+**Cleanup Summary:**
+```
+========================================================
+|                  CLEANUP SUMMARY                     |
+========================================================
+| Duplicate groups processed:         15              |
+| Files deleted:                       27              |
+| Files kept:                          15              |
+| Space freed:                     15.23 GB            |
+========================================================
 ```
 
 ## Log File Format
@@ -211,7 +279,7 @@ File Copy Operation Log - Started: 2024-03-15 14:30:22
 [2024-03-15 14:30:25] [3/500] COPY (DUPLICATE - DIFFERENT HASH)
   Source: c:\Photos\Archive\IMG_001.jpg (2.50 MB)
   Original Target: c:\Organized\2024\03\20240315_143022_IMG_001.jpg
-  Actual Target: c:\Organized\2024\03\20240315_143022_IMG_001_1.jpg
+  Actual Target: c:\Organized\2024\03\20240315_IMG_001_1.jpg
 
 ====================================================================================================
 Operation completed: 2024-03-15 14:35:30
@@ -251,17 +319,67 @@ You can customize the list in `appsettings.json` by editing the `FileExtensions`
 
 ## Example Workflow
 
+### Basic Workflow: Organize Files
+
 1. **Configure** `appsettings.json` with your source and target folders
 2. **Run analysis:**
    ```bash
    dotnet run --analyze
    ```
 3. **Review** `file-analysis.txt` to verify file counts
-4. **Run copy operation:**
+4. **Preview copy (optional):**
+   ```bash
+   dotnet run --copy --dry-run
+   ```
+5. **Run copy operation:**
    ```bash
    dotnet run --copy
    ```
-5. **Check** `copy-log.txt` for detailed operation results
+6. **Check** `copy-log.txt` for detailed operation results
+
+### Advanced Workflow: Find and Clean Duplicates
+
+1. **Organize files first** (steps 1-5 above)
+2. **Find duplicates in target folder:**
+   ```bash
+   dotnet run --find-duplicates
+   ```
+3. **Review** `duplicates-log.txt` to see detected duplicates
+4. **Preview cleanup:**
+   ```bash
+   dotnet run --clean-duplicates --dry-run
+   ```
+5. **Clean duplicates:**
+   ```bash
+   dotnet run --clean-duplicates
+   ```
+6. **Verify** freed space and kept files
+
+### Complete Example
+
+```bash
+# 1. Analyze source folder
+dotnet run --analyze
+# Output: file-analysis_20241207_143022.txt
+
+# 2. Copy and organize files
+dotnet run --copy
+# Output: copy-log_20241207_143530.txt
+# Statistics: 450 files copied, 50 skipped
+
+# 3. Find duplicates in organized folder
+dotnet run --find-duplicates
+# Output: duplicates-log_20241207_144015.txt
+# Found: 15 duplicate groups
+
+# 4. Preview duplicate cleanup
+dotnet run --clean-duplicates --dry-run
+# Preview: Would delete 27 files, keep 15 files, free 15.23 GB
+
+# 5. Clean duplicates
+dotnet run --clean-duplicates
+# Result: Deleted 27 duplicates, freed 15.23 GB
+```
 
 ## Building for Release
 
@@ -306,6 +424,20 @@ Created by PajoCz
 ## Support
 
 If you encounter any issues or have questions, please open an issue on GitHub.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
