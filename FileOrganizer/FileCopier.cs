@@ -112,33 +112,33 @@ public class FileCopier
 
     private void PrintStatistics(int copiedCount, int skippedCount, int errorCount, int totalFiles, TimeSpan duration)
     {
-        Console.WriteLine("????????????????????????????????????????????????????????");
-        Console.WriteLine("?                    STATISTICS                        ?");
-        Console.WriteLine("????????????????????????????????????????????????????????");
-        Console.WriteLine($"? Total files processed:     {totalFiles,10:N0}           ?");
-        Console.WriteLine($"? Files copied:              {copiedCount,10:N0} ({copiedCount * 100.0 / totalFiles,5:F1}%) ?");
-        Console.WriteLine($"? Files skipped (duplicates):{skippedCount,10:N0} ({skippedCount * 100.0 / totalFiles,5:F1}%) ?");
-        Console.WriteLine($"? Errors:                    {errorCount,10:N0} ({errorCount * 100.0 / totalFiles,5:F1}%) ?");
-        Console.WriteLine("????????????????????????????????????????????????????????");
-        Console.WriteLine($"? Total data copied:         {FormatBytes(_totalBytesCopied),20}    ?");
-        Console.WriteLine($"? Total data saved (dupl.):  {FormatBytes(_totalBytesSkipped),20}    ?");
-        Console.WriteLine($"? Total data processed:      {FormatBytes(_totalBytesCopied + _totalBytesSkipped),20}    ?");
-        Console.WriteLine("????????????????????????????????????????????????????????");
-        Console.WriteLine($"? Time elapsed:              {FormatDuration(duration),20}    ?");
+        Console.WriteLine("========================================================");
+        Console.WriteLine("|                    STATISTICS                        |");
+        Console.WriteLine("========================================================");
+        Console.WriteLine($"| Total files processed:     {totalFiles,10:N0}           |");
+        Console.WriteLine($"| Files copied:              {copiedCount,10:N0} ({copiedCount * 100.0 / totalFiles,5:F1}%) |");
+        Console.WriteLine($"| Files skipped (duplicates):{skippedCount,10:N0} ({skippedCount * 100.0 / totalFiles,5:F1}%) |");
+        Console.WriteLine($"| Errors:                    {errorCount,10:N0} ({errorCount * 100.0 / totalFiles,5:F1}%) |");
+        Console.WriteLine("--------------------------------------------------------");
+        Console.WriteLine($"| Total data copied:         {FormatBytes(_totalBytesCopied),20}    |");
+        Console.WriteLine($"| Total data saved (dupl.):  {FormatBytes(_totalBytesSkipped),20}    |");
+        Console.WriteLine($"| Total data processed:      {FormatBytes(_totalBytesCopied + _totalBytesSkipped),20}    |");
+        Console.WriteLine("--------------------------------------------------------");
+        Console.WriteLine($"| Time elapsed:              {FormatDuration(duration),20}    |");
         
         if (duration.TotalSeconds > 0 && _totalBytesCopied > 0)
         {
             var bytesPerSecond = _totalBytesCopied / duration.TotalSeconds;
-            Console.WriteLine($"? Average copy speed:        {FormatBytes((long)bytesPerSecond) + "/s",20}    ?");
+            Console.WriteLine($"| Average copy speed:        {FormatBytes((long)bytesPerSecond) + "/s",20}    |");
         }
         
         if (duration.TotalSeconds > 0 && totalFiles > 0)
         {
             var filesPerSecond = totalFiles / duration.TotalSeconds;
-            Console.WriteLine($"? Avg processing speed:      {filesPerSecond,15:F1} files/s ?");
+            Console.WriteLine($"| Avg processing speed:      {filesPerSecond,15:F1} files/s |");
         }
         
-        Console.WriteLine("????????????????????????????????????????????????????????");
+        Console.WriteLine("========================================================");
     }
 
     private string FormatBytes(long bytes)
@@ -378,3 +378,4 @@ public class FileCopier
         logWriter.WriteLine();
     }
 }
+
